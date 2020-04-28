@@ -30,4 +30,4 @@ then
    kill -9 $pid
 fi
 set -x
-nohup java -jar target/${NAME}-${VERSION}.jar > Log.log 2>&1 &
+nohup java -jar target/${NAME}-${VERSION}.jar &
