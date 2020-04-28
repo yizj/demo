@@ -22,5 +22,12 @@ set +x
 
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
+echo "Stopping demo"
+pid=`ps -ef | grep ${NAME}-${VERSION}.jar | grep -v grep | awk '{print $2}'`
+if [ -n "$pid" ]
+then
+   echo "kill -9 的pid:" $pid
+   kill -9 $pid
+fi
 set -x
 java -jar target/${NAME}-${VERSION}.jar
