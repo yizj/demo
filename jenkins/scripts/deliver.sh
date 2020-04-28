@@ -30,4 +30,4 @@ then
    kill -9 $pid
 fi
 set -x
-nohup java -jar target/${NAME}-${VERSION}.jar &
+BUILD_ID=donKillMe nohup java -jar target/${NAME}-${VERSION}.jar &
