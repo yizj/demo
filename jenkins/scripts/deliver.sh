@@ -22,4 +22,4 @@ then
    kill -9 $pid
 fi
 set -x
-sh "nohup java -jar target/demo-0.0.1-SNAPSHOT.jar >demo.log/ 2>&1 &"
+sh "'nohup java -jar target/demo-0.0.1-SNAPSHOT.jar >demo.log/ 2>&1 &'"
