@@ -30,4 +30,4 @@ then
    kill -9 $pid
 fi
 set -x
-`nohup java -jar target/${NAME}-${VERSION}.jar &`
+`nohup java -jar target/${NAME}-${VERSION}.jar `&`
