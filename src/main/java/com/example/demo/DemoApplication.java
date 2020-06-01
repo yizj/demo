@@ -18,4 +18,10 @@ public class DemoApplication {
         return "hello jenkins";
     }
 
+
+    @GetMapping("/api/user")
+    public String user(){
+        return "hello user";
+    }
+
 }
