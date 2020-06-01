@@ -1,30 +1,32 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
+   agent any
+
+   stages {
+      stage('pull') {
+         steps {
+            echo 'pull'
+            git credentialsId: '736313f9-63ff-439a-b486-8305e94f5afc', url: 'https://github.com/yizj/demo.git'
+         }
+      }
+       stage('build') {
+         steps {
+            echo 'build'
+            sh label: '', script: '/java/apache-maven-3.6.3/bin/mvn -B -DskipTests clean package'
+         }
+      }
+       stage('sonar') {
+         steps {
+            echo 'sonar'
+         }
+      }
+       stage('deliver') {
+          steps {
+                echo 'STEP 4：deploy package'
+				sh label: '', script: '''chmod 777 ./jenkins/scripts/deliver.sh'''
+				sh label: '', script: 'BUILD_ID=dontKillMe nohup ./jenkins/scripts/deliver.sh'
+				sh label: '', script: 'chmod 777 /deploy_cmp_script/demo.sh'
+				sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe /deploy_cmp_script/demo.sh'
             }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
-    }
+      }
+   }
 }
